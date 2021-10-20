@@ -25,58 +25,63 @@ public class ModeloBooleano {
         File[] listOfFiles = folder.listFiles();
         FileReader fr = null;
 
-        for (int i = 0; i < listOfFiles.length; i++) {
-            try {
-                fr = new FileReader(listOfFiles[i]);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-
-            System.out.println("Procesando archivo '" + listOfFiles[i].getName() + "'...");
-
-            BufferedReader in = new BufferedReader(fr);
-
-            String line = null;
-
-            //int lineCount = 0;
-            //int wordCount = 0;
-
-            //long startTime = System.currentTimeMillis();
-
-            String delimiters = "\\s+|,\\s*|\\.\\s*|\\;\\s*|\\:\\s*|\\!\\s*|\\¡\\s*|\\¿\\s*|\\?\\s*|\\-\\s*|\\_\\s*|\"\\s*|\\[\\s*|\\]\\s*|\\(\\s*|\\)\\s*";
-
-            Pattern pat = Pattern.compile("[0-9]*");
-
-            HashSet<String> stopWords = loadStopWords();
-
-            try {
-                while ((line = in.readLine()) != null) {
-                    // lineCount++;
-
-                    if (line.trim().length() == 0) {
-                        continue;
-                    }
-
-                    String words[] = line.split(delimiters);
-
-                    //System.out.println(line);
-                    for (String word : words) {
-                        word = word.toLowerCase();
-                        Matcher mat = pat.matcher(word);
-                        if (!mat.matches() && !stopWords.contains(word)) {
-                            agregarPalabra(tabla, word, listOfFiles[i].getName());
-                        }
-                    }
-                    //System.out.println();
-                    // wordCount += words.length;
+        if (listOfFiles != null) {
+            for (File listOfFile : listOfFiles) {
+                try {
+                    fr = new FileReader(listOfFile);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
                 }
 
-                in.close();
-                fr.close();
-                //long total = System.currentTimeMillis() - startTime;
-                //System.out.printf("%2.3f  segundos, %,2d lineas y %,3d palabras\n", total / 1000.00, lineCount, wordCount);
-            } catch (IOException ex) {
-                Logger.getLogger(ModeloBooleano.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("Procesando archivo '" + listOfFile.getName() + "'...");
+
+                BufferedReader in = null;
+                if (fr != null) {
+                    in = new BufferedReader(fr);
+                }
+
+                String line;
+
+                //int lineCount = 0;
+                //int wordCount = 0;
+
+                //long startTime = System.currentTimeMillis();
+
+                String delimiters = "\\s+|,\\s*|\\.\\s*|\\;\\s*|\\:\\s*|\\!\\s*|\\¡\\s*|\\¿\\s*|\\?\\s*|\\-\\s*|\\_\\s*|\"\\s*|\\[\\s*|\\]\\s*|\\(\\s*|\\)\\s*";
+
+                Pattern pat = Pattern.compile("[0-9]*");
+
+                HashSet<String> stopWords = loadStopWords();
+
+                try {
+                    while ((line = in.readLine()) != null) {
+                        // lineCount++;
+
+                        if (line.trim().length() == 0) {
+                            continue;
+                        }
+
+                        String words[] = line.split(delimiters);
+
+                        //System.out.println(line);
+                        for (String word : words) {
+                            word = word.toLowerCase();
+                            Matcher mat = pat.matcher(word);
+                            if (!mat.matches() && !stopWords.contains(word)) {
+                                agregarPalabra(tabla, word, listOfFile.getName());
+                            }
+                        }
+                        //System.out.println();
+                        // wordCount += words.length;
+                    }
+
+                    in.close();
+                    fr.close();
+                    //long total = System.currentTimeMillis() - startTime;
+                    //System.out.printf("%2.3f  segundos, %,2d lineas y %,3d palabras\n", total / 1000.00, lineCount, wordCount);
+                } catch (IOException ex) {
+                    Logger.getLogger(ModeloBooleano.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
 
@@ -105,13 +110,15 @@ public class ModeloBooleano {
             try{
                 num = sc.nextInt();
                 if(num!=1){
-                    System.exit(2);
+                    continuar = false;
                 }
             } catch (InputMismatchException e){
-                System.exit(2);
+                continuar = false;
             }
 
         }
+
+        System.exit(2);
 
     }
 
@@ -127,7 +134,7 @@ public class ModeloBooleano {
 
         HashSet<String> table = new HashSet<>();
 
-        String line = null;
+        String line;
 
         try {
             while ((line = in.readLine()) != null) {
