@@ -1,0 +1,133 @@
+Introducción
+Debido al auge de la web desde mediados de los 90's, cada día aumenta de
+forma incontrolable la información que se coloca en todos los diferentes 
+sitios a lo largo de la www. Es por eso que surge la necesidad de clasificar 
+la mayor parte de la información que nos ofrece la internet, sin embargo 
+debido a la innumerable cantidad de páginas web que hay al día de hoy, pues 
+resulta imposible siquiera pensar en clasificar esta información de forma 
+manual.
+
+De esta necesidad es que nace la Recuperación de la Información, entendida 
+como el área de las Ciencias de la Computación encargada de tratar este 
+volumen de datos gigantezco, de forma que cualquier usuario en la web puede 
+encontrar información de su interés entre tantos documentos.
+
+En cuanto a la forma de tratar y procesar toda esta información, es como 
+nacen los modelos clásicos de RI, los cuales no son otra cosa que algoritmos 
+y estructuras de datos que brindan una solución al problema de la 
+clasificación y de búsqueda de documentos en la www.
+
+Estos modelos clásicos son tres:
+
+Modelo Booleano
+Modelo Vectorial
+Modelo Probabilistico
+
+Modelo Booleano
+Este modelo constituye el primer modelo teórico empleado para establecer el 
+subconjunto de documentos relevantes, en relación a una consulta específica 
+realizada a una colección de documentos sean estos páginas disponibles en la 
+web o una biblioteca digital.
+
+Está basado en el álgebra de Boole, por lo que se considera como un modelo 
+simple y fácil de implementar, por lo que fue el preferido (y básicamente el 
+único) en los Sistemas de Recuperación de Información tempranos.
+
+Este modelo, al ser primitivo, emplea un método de relevancia simple: un 
+documento es relevante o no lo es, por lo que para realizar una consulta se 
+necesita primero tener un índice de todas las palabras que son relevantes a 
+una consulta, es decir, primero se necesita procesar el documentos para 
+eliminar palabras no relevantes, sean estas números, preposiciones, 
+conjunciones, pronombres, mejor conocidas como Stopwords. Estas palabras son 
+eliminadas debido a aparecen frecuentemente en la mayoria de textos, por lo 
+que no añaden mayor información sobre el contenido de un documento.
+
+Despues de realizar esta limpieza, se almacenan todas las palabras del 
+documento, se guarda en un índice invertido, el cual es una lista con todos 
+los términos de todos los documentos de la colección ordenados de forma 
+alfabética, y a cada término se le añade una referencia al documento del cual 
+fue extraído.
+
+Ahora, para realizar una búsqueda, hay que expresar la consulta como una 
+expresión booleana con una semántica clara y concreta, es decir, cada término 
+que se desea que se encuentre en un documento adicional al primer elemento de 
+búsqueda tiene que agregarsele previamente la etiqueta AND, OR o NOT, lo cual 
+índica si se quiere que ambos términos se encuentren en el documentos, si se 
+desea que sean las dos palabras o al menos uno, o si se desean todos los 
+terminos que hablen de un tema pero que no contengan nada de información 
+sobre otro. Para comprender mejor esta parte, ver la siguiente imagen:
+
+Cabe aclarar, que para realizar este tipo de consultas en este sistema, el 
+sistema primero tiene que encargarse de transformar la consulta a una Forma 
+Normal Disjunta (FND), la cual en algebra de Boole índica que tiene que ser 
+una sucesión de AND's los cuales pueden estar formados a su vez por 
+sbuconsultas de OR's, las cuales tienen que tener el mismo tamaño de la 
+cantidad de elementos dentro del índice invertido.
+
+A continuación se presentan diferentes casos usando varias de las 
+combinaciones posibles de los operadores AND OR y NOT:
+
+Operador AND :: Q = "A" AND "B"
+El operador AND es el encargado de intersecar o especificar que dos 
+condiciones, premisas ó terminos tienen que cumplirse obligatoriamente, 
+simultáneamente ó a la vez. Esto significa que si no se produce de esta 
+forma, el sistema de recuperación no devolverá resultado alguno. Según lo que 
+se muestra en la figura1,  sólo los documentos que posean el término A y B (
+zona sombreada) se recuperarán, desechando por lo tanto aquellos términos que 
+o bien sólo contengan A o bien sólo contengan B.
+
+Operador AND :: Q = "A" AND "B" AND "C"
+En este caso, la consulta propuesta implica la intersección de 3 términos. Por lo tanto, la 
+recuperación sólo se efectuará para aquellos documentos que tengan presentes los términos 
+A, B y C. Si faltase uno de estos términos el documento no se recuperaría, véase figura2. 
+
+Operador OR :: Q = "A" OR "B"
+El operador OR implica unión, alternativa y adición. Esto significa que dos conjuntos 
+conectados por el operador OR se sumarán o unirán y si constan de elementos comunes, éstos 
+también se recogerán. En recuperación de información significa que para una consulta de 
+términos A OR B, se recuperarán aquellos documentos que tengan presencia de A, presencia de 
+B y presencia de A y B a la vez. Por ello la consulta AND es más específica y restrictiva
+que OR, mucho más amplia, véase figura3.
+
+Operador NOT :: Q = "A" NOT "B"
+
+El operador NOT también conocido como de negación, implica resta, diferencia, reducción o 
+sustracción. Esto es restar a un conjunto de documentos aquellos que contenga el término B. 
+Obsérvese la figura4, en la que sólo se recuperan aquellos documentos que contengan los 
+términos A pero no los términos B.
+
+Operador NOT :: Q = "A" NOT "B"
+El operador NOT también conocido como de negación, implica resta, diferencia, reducción o 
+sustracción. Esto es restar a un conjunto de documentos aquellos que contenga el término B. 
+Obsérvese la figura4, en la que sólo se recuperan aquellos documentos que contengan los 
+términos A pero no los términos B.
+
+Operador XOR :: Q = "A" XOR "B" XOR "C"
+El operador XOR se utiliza para seleccionar todos los elementos complementarios de los 
+conjuntos. Dicho de otra forma, evita las intersecciones. En la figura6, se observa que la 
+zona de documentos que serán recuperados es aquella en la que no se combinan los términos 
+A, B y C. Así por ejemplo, de esta forma la expresión A XOR B es equivalente a (A AND (NOT 
+B)) OR ((NOT A) and B).
+
+Ventajas
+El modelo booleano permite procesar colecciones muy grandes rápidamente. Resulta 
+sistemático y ello supone una gran velocidad de recuperación.
+Es un modelo flexible ya que permite el empleo de distintas conectivas para precisar la 
+consulta del usuario. Permite aproximar bastante las consultas por frase exacta y resulta 
+perfectamente válido para recuperar por medio de vocabulario controlado.
+Entraña ventajas para efectuar una recuperación de información igualada, en el sentido de 
+que el sistema de información presente la mejor respuesta a una necesidad de información 
+expresada por ciertas palabras clave.
+Inconvenientes del modelo Booleano
+En muchos casos, las necesidades de información son complejas y ello entraña cierta 
+dificultad a la hora de expresar las consultas mediante fórmulas lógicas que pueden incluso 
+llegar a concatenarse.
+A veces el usuario puede imponer una lógica semántica que no se corresponda con la lógica 
+algebraica de Boole, implicando un uso incorrecto de los operadores.
+El volumen de resultados no se puede controlar, ya que la consulta plantea una resolución 
+absoluta para toda la colección en la que se aplica. Esto significa que el resultado puede 
+ser excesivamente grande o pequeño.
+Los resultados obtenidos pueden ser perfectamente relevante o absolutamente irrelevante, no 
+hay gradación o término medio, ya que el funcionamiento del modelo booleano se basa en 
+equiparación exacta. Es decir que no ordena los documentos por orden de relevancia, tal 
+como se llevaría a cabo en un modelo basado en pesos o ponderación de los términos.
