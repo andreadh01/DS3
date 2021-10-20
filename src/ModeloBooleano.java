@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 *   Fecha: 19/oct/2021
  */
 
-public class MetodoBooleano {
+public class ModeloBooleano {
     public static void main(String[] args) {
         // TODO code application logic here
 
@@ -76,7 +76,7 @@ public class MetodoBooleano {
                 //long total = System.currentTimeMillis() - startTime;
                 //System.out.printf("%2.3f  segundos, %,2d lineas y %,3d palabras\n", total / 1000.00, lineCount, wordCount);
             } catch (IOException ex) {
-                Logger.getLogger(MetodoBooleano.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ModeloBooleano.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 
@@ -122,7 +122,7 @@ public class MetodoBooleano {
         try {
             fi = new FileReader("stopwords-es.txt");
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(MetodoBooleano.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ModeloBooleano.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         BufferedReader in = new BufferedReader(fi);
@@ -138,7 +138,7 @@ public class MetodoBooleano {
             in.close();
             fi.close();
         } catch (IOException ex) {
-            Logger.getLogger(MetodoBooleano.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ModeloBooleano.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return table;
