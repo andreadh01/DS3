@@ -80,10 +80,8 @@ public class ModeloBooleano {
             }
         }
 
-        int c = 0;
         for (String key : tabla.keySet()) {
-            System.out.println(c + "\t" + key + " --> " + tabla.get(key));
-            c++;
+            System.out.println(key + " --> " + tabla.get(key));
         }
 
         boolean continuar = true;
