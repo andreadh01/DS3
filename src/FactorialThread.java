@@ -1,9 +1,14 @@
-import java.util.LinkedList;
-import java.util.Scanner;
+import java.util.ArrayList;
+
+/*
+*   Andrea Duarte Hernández
+*   Materia: Desarrollo de Sistemas III
+*   Fecha: 21/oct/2021
+ */
 
 public class FactorialThread extends Thread {
-    private static LinkedList<Integer> numeros = new LinkedList<>();
-    private static LinkedList<Integer> factoriales = new LinkedList<>();
+    private static ArrayList<Integer> numeros = new ArrayList<>();
+    private static ArrayList<Integer> factoriales = new ArrayList<>();
 
     @Override
     public void run() {
@@ -22,20 +27,15 @@ public class FactorialThread extends Thread {
 
     public static void main(String[] args) {
         FactorialThread thread = new FactorialThread();
-        Scanner sc = new Scanner(System.in);
 
-        System.out.println("¿Cuantos numeros va a ingresar?");
-        int cant = sc.nextInt();
-        System.out.println("Ingrese los numeros (sin decimal) de los que quiera obtener su factorial: ");
-
-        for (int i = 0; i < cant; i++) {
-            numeros.add(sc.nextInt());
+        for (int i = 0; i < args.length; i++) {
+            numeros.add(Integer.valueOf(args[i]));
         }
 
         thread.start();
 
-        System.out.println("Lista de numeros: "+numeros.toString());
-        System.out.println("Lista de factorial: "+factoriales.toString());
+        System.out.println("Lista de numeros: "+ numeros);
+        System.out.println("Lista de factorial: "+factoriales);
 
 
     }
