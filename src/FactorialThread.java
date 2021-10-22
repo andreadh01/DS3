@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 
 /*
 *   Andrea Duarte Hernández
@@ -7,36 +6,34 @@ import java.util.ArrayList;
  */
 
 public class FactorialThread extends Thread {
-    private static ArrayList<Integer> numeros = new ArrayList<>();
-    private static ArrayList<Integer> factoriales = new ArrayList<>();
+    private int numero;
+
+    public FactorialThread(String n){
+        this.numero = Integer.parseInt(n);
+    }
 
     @Override
     public void run() {
-        int factorial;
-        int temp;
-        for (int num: numeros) {
-            factorial = 1;
-            temp = num;
-            while(num>0){
-                num = num-1;
-                factorial = factorial*(temp-num);
-            }
-            factoriales.add(factorial);
-        }
-    }
+        int factorial = 1;
+        int temp = numero;
+        int n = numero;
 
+        while(n>0){
+            n = n-1;
+            factorial *= (temp-n);
+        }
+
+        System.out.println("El factorial de "+numero+" es: "+factorial);
+    }
+}
+
+class Main {
     public static void main(String[] args) {
-        FactorialThread thread = new FactorialThread();
+        FactorialThread[] threads = new FactorialThread[args.length];
 
         for (int i = 0; i < args.length; i++) {
-            numeros.add(Integer.valueOf(args[i]));
+            threads[i] = new FactorialThread(args[i]);
+            threads[i].start();
         }
-
-        thread.start();
-
-        System.out.println("Lista de numeros: "+ numeros);
-        System.out.println("Lista de factorial: "+factoriales);
-
-
     }
 }
