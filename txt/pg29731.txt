@@ -8693,8 +8693,8 @@ M
 
 =mayor=, major, greater, older, elderly;
   =el, la ----=, the greatest;
-  =calle Mayor=, Main Street (of Madrid);
-  =Plaza Mayor=, Main Square
+  =calle Mayor=, threads.Main Street (of Madrid);
+  =Plaza Mayor=, threads.Main Square
 
 =medalla=, medal
 
